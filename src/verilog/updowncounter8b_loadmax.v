@@ -3,22 +3,28 @@
 Structural model of a 8-bit register
 */
 
-module updowncounter8b_loadmax( 
+module updowncounter8b_loadmax(
                    input        upb_down,// 0 ("b" == "bar") for counting up, 1 for counting dopwn
                                 clock,   // clock
 			                    reset,   // reset, assynchronous
 				                enable,  // enable
 				   input  [7:0] step_count,     // the value to increment/decrement
-			       output [7:0] counter_output  // the counter output
-				   
+			       output [7:0] counter_output, // the counter output
+
 				   // additional inputs:
-				   input        load,			// set to 1 to load the counter register with data
+				   input load,					// set to 1 to load the counter register with data
 				                                // at the input din_load[7:0]
                    input [7:0] din_load,        // data input to load to the counter register when load is 1
 				   input [7:0] max_count        // maximum counting value: counter should not exceed this value
 			  );
 
 wire [7:0] next_count;
+wire [7:0] mux_out;
+
+mux2_8bit myMux (	.din_load(din_load),
+					.din_max(max_count),
+					.load(load),
+					.mux_out(next_count));
 //------------------------------------------------------
 // Instantiate one 8-bit register:
 register8b  register8b_1(
@@ -54,7 +60,7 @@ four_bit_adder  four_bit_add_low
 					  .sum( next_count[3:0] ),    // add or sub result
 					  .cout( cout34 )       // the sum carry out
 					 ),
-					 
+
 				four_bit_add_high
                     ( .cin( cout34 ),             // Carry in is the carry out from the first section
                       .a( counter_output[7:4] ),  // operand a
@@ -62,5 +68,5 @@ four_bit_adder  four_bit_add_low
 					  .sum( next_count[7:4] ),    // add or sub result
 					  .cout(  )                   // don't connect the output carryout
 					 );
-				   
-endmodule			  
+
+endmodule

@@ -3,7 +3,7 @@
 Structural model of a 8-bit register
 */
 
-module updowncounter8b( 
+module updowncounter8b(
                    input  upb_down,// 0 ("b" == "bar") for counting up, 1 for counting dopwn
                    input  clock,   // clock
 			       input  reset,   // reset, assynchronous
@@ -48,7 +48,7 @@ four_bit_adder  four_bit_add_low
 					  .sum( next_count[3:0] ),    // add or sub result
 					  .cout( cout34 )       // the sum carry out
 					 ),
-					 
+
 				four_bit_add_high
                     ( .cin( cout34 ),             // Carry in is the carry out from the first section
                       .a( counter_output[7:4] ),  // operand a
@@ -56,5 +56,5 @@ four_bit_adder  four_bit_add_low
 					  .sum( next_count[7:4] ),    // add or sub result
 					  .cout(  )                   // don't connect the output carryout
 					 );
-				   
-endmodule			  
+
+endmodule
