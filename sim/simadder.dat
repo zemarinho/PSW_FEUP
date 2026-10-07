@@ -1,0 +1,4 @@
+../src/verilog/fadder.v
+../src/verilog/four_bit_adder.v
+../src/verilog/four_bit_adder_sub.v
+../src/verilog/four_bit_adder_sub_tb.v
